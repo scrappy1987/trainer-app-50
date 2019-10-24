@@ -1,26 +1,33 @@
 package com.qa.business;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qa.persistence.domain.Trainer;
+import com.qa.persistence.repository.TrainerRepository;
 
 @Service
 public class TrainerService {
 
-	public Trainer getAllTrainers() {
-
-		return new Trainer("Jim", "Gordon");
+	@Autowired
+	private TrainerRepository repository;
+	
+	public List<Trainer> getAllTrainers() {
+		return repository.findAll();
 	}
 
-	public Trainer addNewTrainer() {
-		return new Trainer("Jim", "Gordon");
+	public Trainer addNewTrainer(Trainer trainer) {
+		return repository.save(trainer);
 	}
 
-	public Trainer updateTrainer() {
-		return new Trainer("Jim", "Gordon");
+	public Trainer updateTrainer(Trainer trainer) {
+		return repository.save(trainer);
 	}
 
-	public Trainer deleteTrainer() {
-		return new Trainer("Jim", "Gordon");
+	public String deleteTrainer(Long trainerId) {
+		repository.deleteById(trainerId);
+		return "succesfully deleted";
 	}
 }

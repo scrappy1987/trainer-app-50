@@ -1,10 +1,14 @@
 package com.qa.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,28 +18,28 @@ import com.qa.persistence.domain.Trainer;
 @RestController
 @RequestMapping("/trainerapp")
 public class TrainerController {
-	
+
 	@Autowired
-	private TrainerService service;
+	private TrainerService trainerService;
 	
-	@GetMapping(value = "trainer")
-	public Trainer getAllTrainers(){
-		
-		return service.getAllTrainers();
-	}
-	 
-	@PostMapping(value = "trainer")
-	public Trainer addNewTrainer() {
-		return service.addNewTrainer();
+	@GetMapping("/trainer")
+	public List<Trainer> getAllTrainer() {
+		return trainerService.getAllTrainers();
 	}
 	
-	@PutMapping(value = "trainer")
-	public Trainer updateTrainer() {
-		return service.updateTrainer();
+	@PostMapping("/trainer")
+	public Trainer addNewTrainer(@RequestBody Trainer trainer) {
+		return trainerService.addNewTrainer(trainer);
 	}
 	
-	@DeleteMapping(value = "trainer")
-	public Trainer deleteTrainer() {
-		return service.deleteTrainer();
+	@PutMapping("/trainer")
+	public Trainer updateTrainer(@RequestBody Trainer trainer) {
+		return trainerService.updateTrainer(trainer);
 	}
+	
+	@DeleteMapping("/trainer/{id}")
+	public String deleteTrainer(@PathVariable(value = "id") Long id) {
+		return trainerService.deleteTrainer(id);
+	}
+
 }
